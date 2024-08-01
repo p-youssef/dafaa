@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <!-- form start -->
+    <form method="post">
+        {% csrf_token %}
+        {{ creation_form.as_p }}
+ 
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- form ends -->
+</body>
+</html>

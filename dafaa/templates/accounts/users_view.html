@@ -1,0 +1,6 @@
+
+{% for user in users %}
+
+    <a href="{% url 'user_view' user.pk %}">{{ user }}</a><br>
+
+{% endfor %}

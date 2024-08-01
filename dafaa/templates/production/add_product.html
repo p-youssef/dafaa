@@ -1,0 +1,14 @@
+<!-- myapp/templates/myapp/contact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ creation_form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

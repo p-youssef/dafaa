@@ -1,0 +1,16 @@
+<!-- myapp/templates/myapp/contact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ edit_form.as_p }}
+        <button type="submit">Save</button>
+        <a href="{% url 'add_item' edit_form.product_id %}">add item</a>
+
+    </form>
+</body>
+</html>

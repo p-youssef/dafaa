@@ -1,0 +1,146 @@
+<!-- myapp/templates/myapp/contact.html -->
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+          
+        name: {{ edit_form.name }} <br>
+        <div style="display: none;">
+            {{ edit_form.product }}
+        </div>
+        
+        Weight: {{ edit_form.Weight }} <br>
+        width: {{ edit_form.width }} <br>
+        height: {{ edit_form.height }} <br>
+        length: {{ edit_form.length }} <br>
+        description: {{ edit_form.description }} <br>
+        packaging_group: {{ edit_form.packaging_group }} <br>
+        raw_material_value: {{ edit_form.raw_material_value }} <br>
+        preducing_date: {{ edit_form.preducing_date }} <br>
+        first_offer_price: {{ edit_form.first_offer_price }} <br>
+        creater: {{ edit_form.creater }} <br>
+
+    
+        <hr>
+        <div id="referenceLinks">
+            <!-- Dynamic divs with inputs will be added here -->
+            
+        </div>
+        <button type="button" id="addButton">Add Reference</button>
+        <input type="hidden" id="id_online_shop" name="online_shop" value="{}">
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const referenceLinksDiv = document.getElementById('referenceLinks');
+                const hiddenInput = document.getElementById('id_online_shop');
+                const addButton = document.getElementById('addButton');
+
+                // Function to update hidden input with JSON value
+                function updateHiddenInput() {
+                    const links = {};
+                    const divs = referenceLinksDiv.querySelectorAll('.reference-div');
+                    divs.forEach(div => {
+                        const websiteInput = div.querySelector('.website-name');
+                        const urlInput = div.querySelector('.website-url');
+                        if (websiteInput.value && urlInput.value) {
+                            links[websiteInput.value] = urlInput.value;
+                        }
+                    });
+                    hiddenInput.value = JSON.stringify(links);
+                    console.log(hiddenInput.value)
+                }
+
+                // Function to create a new reference div
+                function createReferenceDiv(websiteName = '', websiteURL = '') {
+                    const div = document.createElement('div');
+                    div.classList.add('reference-div');
+
+                    const websiteInput = document.createElement('input');
+                    websiteInput.type = 'text';
+                    websiteInput.classList.add('website-name');
+                    websiteInput.placeholder = 'Website Name';
+                    websiteInput.value = websiteName;
+                    websiteInput.addEventListener('input', updateHiddenInput);
+
+                    const urlInput = document.createElement('input');
+                    urlInput.type = 'url';
+                    urlInput.classList.add('website-url');
+                    urlInput.placeholder = 'Website URL';
+                    urlInput.value = websiteURL;
+                    urlInput.addEventListener('input', updateHiddenInput);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type = 'button';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', function() {
+                        div.remove();
+                        updateHiddenInput();
+                    });
+
+                    div.appendChild(websiteInput);
+                    div.appendChild(urlInput);
+                    div.appendChild(deleteButton);
+                    referenceLinksDiv.appendChild(div);
+                }
+
+                // Add a new reference div when the add button is clicked
+                addButton.addEventListener('click', function() {
+                    createReferenceDiv();
+                });
+
+                // Initial call to update the hidden input in case there are predefined values
+                updateHiddenInput();
+                    function populateInitialData(initialData ) {
+                    for (const [websiteName, websiteURL] of Object.entries(initialData)) {
+                        createReferenceDiv(websiteName, websiteURL);
+                    }
+                    updateHiddenInput();  // Update hidden input with initial data
+                }
+
+                populateInitialData( JSON.parse('{{ edit_form.online_shop.value|escapejs }}'))
+            });
+  
+
+        </script>
+        <hr>
+        <button type="submit" name="post_type" value="edit" >Submit</button>
+        <hr>
+        {% if not item.preduced %}
+            <button type="submit" name="post_type" value="set_as_preduced" >set_as_preduced</button>
+        {% else %}
+            preduced <br>
+            
+            {% if not item.selled %}
+                <button type="submit" name="post_type" value="set_as_sold" >set_as_sold</button>
+                <input type="number" name="sold_price" id="sold_price" value="{{ edit_form.first_offer_price.value }}">
+            {% else %}
+                SOLD
+            {% endif %}
+        {% endif %}
+        <hr>
+        {% for image in item.images.all %}
+            <form action="POST">
+                <div>
+                    <img src="{{ image.image.url }}" alt="{{ image.caption }}">
+                    <p>{{ image.description }}</p>
+                </div>
+                <button type="submit" name="post_type" value="delete_image"  >delete</button>
+                <input type="hidden" name="image_id" value="{{ image.pk }}">
+            </form>
+            
+        {% endfor %}
+
+        <div style="display: none;">
+            {{ image_form.item }}
+        </div>
+        
+        {{ image_form.image }}
+        {{ image_form.description }}
+        <button type="submit" name="post_type" value="add_image"  >Upload</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{{ user }}
+
+<form method="post">
+    {% csrf_token %}
+    
+    {{ password_form.as_p }}
+
+    <input type="hidden" name="type" value="password">
+    <button type="submit">change password</button>
+</form>
