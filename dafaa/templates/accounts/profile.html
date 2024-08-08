@@ -1,10 +1,26 @@
-{{ user }}
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Profile
+     {% endblock %} {% block content %}
 
-<form method="post">
-    {% csrf_token %}
-    
-    {{ password_form.as_p }}
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'production_dashboard' %}">{{ user }}</a>
 
-    <input type="hidden" name="type" value="password">
-    <button type="submit">change password</button>
-</form>
+      </div>
+      <div class="dashboard-inner-block">
+        <h2>{{ user }}</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ password_form.as_p }}
+
+          <input type="hidden" name="type" value="password" />
+          <button type="submit" class="btn btn-primary">change password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

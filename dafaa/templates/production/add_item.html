@@ -1,103 +1,111 @@
-<!-- myapp/templates/myapp/contact.html -->
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Add Product{% endblock %} 
+{% block content %}
 
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-          
-        name: {{ creation_form.name }} <br>
-        <div style="display: none;">
-            {{ creation_form.product }}
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+        <div class="page-path">
+            <a href="{% url 'production_dashboard' %}">Production</a>
+            >
+            <a href="{% url 'products_management_view' %}">Product Types</a>
+            >
+            <a href="{% url 'edit_product' product.pk %}">{{ product }}</a>
+            >
+            <a href="">Add item</a>
         </div>
         
-        Weight: {{ creation_form.Weight }} <br>
-        width: {{ creation_form.width }} <br>
-        height: {{ creation_form.height }} <br>
-        length: {{ creation_form.length }} <br>
-        description: {{ creation_form.description }} <br>
-        packaging_group: {{ creation_form.packaging_group }} <br>
-        raw_material_value: {{ creation_form.raw_material_value }} <br>
-        
-        preducing_date: {{ creation_form.preducing_date }} <br>
-        first_offer_price: {{ creation_form.first_offer_price }} <br>
-        creater: {{ creation_form.creater }} <br>
+      <div class="dashboard-inner-block">
+        <h2>Add Product</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ creation_form.as_p }}
 
-    
-        <hr>
-        <div id="referenceLinks">
+          <hr />
+          <h3>Online shop references</h3>
+          <div id="referenceLinks">
             <!-- Dynamic divs with inputs will be added here -->
-        </div>
-        <button type="button" id="addButton">Add Reference</button>
-        <input type="hidden" id="id_online_shop" name="online_shop" value="{}">
+          </div>
+          <br />
+          <button type="button" id="addButton" class="btn btn-success">
+            +
+          </button>
+          <input
+            type="hidden"
+            id="id_online_shop"
+            name="online_shop"
+            value="{}"
+          />
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const referenceLinksDiv = document.getElementById('referenceLinks');
-                const hiddenInput = document.getElementById('id_online_shop');
-                const addButton = document.getElementById('addButton');
+          <hr />
+          <button type="submit" class="btn btn-success">Save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const referenceLinksDiv = document.getElementById("referenceLinks");
+    const hiddenInput = document.getElementById("id_online_shop");
+    const addButton = document.getElementById("addButton");
 
-                // Function to update hidden input with JSON value
-                function updateHiddenInput() {
-                    const links = {};
-                    const divs = referenceLinksDiv.querySelectorAll('.reference-div');
-                    divs.forEach(div => {
-                        const websiteInput = div.querySelector('.website-name');
-                        const urlInput = div.querySelector('.website-url');
-                        if (websiteInput.value && urlInput.value) {
-                            links[websiteInput.value] = urlInput.value;
-                        }
-                    });
-                    hiddenInput.value = JSON.stringify(links);
-                    console.log(hiddenInput.value)
-                }
+    // Function to update hidden input with JSON value
+    function updateHiddenInput() {
+      const links = {};
+      const divs = referenceLinksDiv.querySelectorAll(".reference-div");
+      divs.forEach((div) => {
+        const websiteInput = div.querySelector(".website-name");
+        const urlInput = div.querySelector(".website-url");
+        if (websiteInput.value && urlInput.value) {
+          links[websiteInput.value] = urlInput.value;
+        }
+      });
+      hiddenInput.value = JSON.stringify(links);
+      console.log(hiddenInput.value);
+    }
 
-                // Function to create a new reference div
-                function createReferenceDiv(websiteName = '', websiteURL = '') {
-                    const div = document.createElement('div');
-                    div.classList.add('reference-div');
+    // Function to create a new reference div
+    function createReferenceDiv(websiteName = "", websiteURL = "") {
+      const div = document.createElement("div");
+      div.classList.add("reference-div");
 
-                    const websiteInput = document.createElement('input');
-                    websiteInput.type = 'text';
-                    websiteInput.classList.add('website-name');
-                    websiteInput.placeholder = 'Website Name';
-                    websiteInput.value = websiteName;
-                    websiteInput.addEventListener('input', updateHiddenInput);
+      const websiteInput = document.createElement("input");
+      websiteInput.type = "text";
+      websiteInput.classList.add("website-name");
+      websiteInput.placeholder = "Website Name";
+      websiteInput.value = websiteName;
+      websiteInput.addEventListener("input", updateHiddenInput);
 
-                    const urlInput = document.createElement('input');
-                    urlInput.type = 'url';
-                    urlInput.classList.add('website-url');
-                    urlInput.placeholder = 'Website URL';
-                    urlInput.value = websiteURL;
-                    urlInput.addEventListener('input', updateHiddenInput);
+      const urlInput = document.createElement("input");
+      urlInput.type = "url";
+      urlInput.classList.add("website-url");
+      urlInput.placeholder = "Website URL";
+      urlInput.value = websiteURL;
+      urlInput.addEventListener("input", updateHiddenInput);
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.type = 'button';
-                    deleteButton.textContent = 'Delete';
-                    deleteButton.addEventListener('click', function() {
-                        div.remove();
-                        updateHiddenInput();
-                    });
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.textContent = "Delete";
+      deleteButton.classList = "btn btn-danger";
+      deleteButton.addEventListener("click", function () {
+        div.remove();
+        updateHiddenInput();
+      });
 
-                    div.appendChild(websiteInput);
-                    div.appendChild(urlInput);
-                    div.appendChild(deleteButton);
-                    referenceLinksDiv.appendChild(div);
-                }
+      div.appendChild(websiteInput);
+      div.appendChild(urlInput);
+      div.appendChild(deleteButton);
+      referenceLinksDiv.appendChild(div);
+    }
 
-                // Add a new reference div when the add button is clicked
-                addButton.addEventListener('click', function() {
-                    createReferenceDiv();
-                });
+    // Add a new reference div when the add button is clicked
+    addButton.addEventListener("click", function () {
+      createReferenceDiv();
+    });
 
-                // Initial call to update the hidden input in case there are predefined values
-                updateHiddenInput();
-            });
-        </script>
-        <hr>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+    // Initial call to update the hidden input in case there are predefined values
+    updateHiddenInput();
+  });
+</script>
+{% endblock %}

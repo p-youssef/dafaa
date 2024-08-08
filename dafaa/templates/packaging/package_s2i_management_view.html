@@ -1,0 +1,34 @@
+
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Categories{% endblock %} 
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'packaging_dashboard' %}">Packaging</a>
+        >
+        <a href="{% url 'package_group_management_view' %}">Packages (Syria to Italy)</a>
+      </div>
+      <div class="dashboard-inner-block">
+        <h1>Packages (Syria to Italy)</h1>
+        <hr />
+        <a href="{% url 'add_package_s2i' %}" class="btn btn-success">+</a>
+        <br /><br />
+        <div class="list-group">
+          {% for package in packages %}
+          <a
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            href="{% url 'edit_package_s2i' package.id %}">
+            {{ package }}
+          </a>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

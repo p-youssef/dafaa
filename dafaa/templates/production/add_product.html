@@ -1,14 +1,35 @@
-<!-- myapp/templates/myapp/contact.html -->
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %}
 
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ creation_form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% block title %}Management Dashboard | Add Type{% endblock %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 dashboard-outline-block" >
+            <div class="page-path">
+                <a href="{% url 'production_dashboard' %}">Production</a>
+                >
+                <a href="{% url 'products_management_view' %}">Products</a>
+                >
+                <a href="{% url 'add_product' %}">Add product</a>
+                
+            </div>
+
+            <div class="dashboard-inner-block">
+                <h2>Add Product type</h2>
+                <hr>
+                <form method="post" class="django-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ creation_form.as_p }}
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

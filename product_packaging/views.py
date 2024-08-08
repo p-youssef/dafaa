@@ -4,6 +4,36 @@ from .models import *
 from .forms import *
 
 
+## Dashboards views
+
+@user_passes_test(lambda user: user.is_superuser)
+def packaging_dashboard(request):
+    
+    data = {
+        'package_s2i': Package_S2I.objects.all(),
+        'package_group':Packaging_Group.objects.all()
+    }
+    return render(request, 'packaging/dashboard.html',data)
+
+
+
+## Management views
+
+@user_passes_test(lambda user: user.is_superuser)
+def packages_s2i_management_view(request):
+    return render(request, 'packaging/package_s2i_management_view.html', {'packages': Package_S2I.objects.all()})
+
+
+
+@user_passes_test(lambda user: user.is_superuser)
+def package_group_management_view(request):
+    return render(request, 'packaging/package_group_management_view.html', {'groups': Packaging_Group.objects.all()})
+
+
+
+##CRUD views
+
+
 @user_passes_test(lambda user: user.is_superuser)
 def edit_packaging_group(request, group_id):
 
@@ -19,7 +49,7 @@ def edit_packaging_group(request, group_id):
         edit_form = PackagingGroupForm(instance=group)
 
     
-    return render(request, 'packaging/edit_packaging_group.html', {'edit_form': edit_form})
+    return render(request, 'packaging/edit_packaging_group.html', {'edit_form': edit_form, 'group':group})
 
 
 
@@ -51,11 +81,12 @@ def edit_package_s2i(request, package_id):
         
         elif request.POST.get('submit_type') == 'set_as_send':
             package.set_as_send()
+            print('set_as_send')
             
 
 
     
-    return render(request, 'packaging/edit_package_s2i.html', {'edit_form': edit_form})
+    return render(request, 'packaging/edit_package_s2i.html', {'edit_form': edit_form, 'package':package})
 
 
 
@@ -73,6 +104,3 @@ def add_package_s2i(request):
     return render(request, 'packaging/add_package_s2i.html', {'creation_form': creation_form})
 
 
-
-def products_view(request):
-    return render(request, 'packaging/add_package_s2i.html', {'creation_form': creation_form})

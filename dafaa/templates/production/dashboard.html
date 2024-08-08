@@ -1,1 +1,41 @@
-prodcution dashboard
+{% extends "admin_base.html" %}
+
+{% block title %}Management Dashboard | Production Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="page-path">
+            <a href="{% url 'production_dashboard' %}">Production</a>    
+        </div>
+        <div class="col-lg-4 dashboard-outline-block" >
+            <div class="dashboard-inner-block" style="cursor: pointer;" onclick="window.location.href = '{% url 'products_management_view' %}'">
+                <h5>Product Types</h5>
+                <hr>
+                <h1 style="text-align: center;"> {{ products.count }} <sub>Type</sub></h1>
+            </div>
+        </div>
+
+        <div class="col-lg-4 dashboard-outline-block" >
+            <div class="dashboard-inner-block" style="cursor: pointer;" onclick="window.location.href = '{% url 'categories_management_view' %}'">
+                <h5>Product Categories</h5>
+                <hr>
+                <h1 style="text-align: center;"> {{ categories.count }} <sub>Category</sub></h1>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 dashboard-outline-block">
+            <div class="dashboard-inner-block" style="cursor: pointer;" onclick="window.location.href = '{% url 'items_management_view' %}'">
+                <h5>Products</h5>
+                <hr>
+                <h1 style="text-align: center;"> {{ items.count }} <sub>Product</sub></h1>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

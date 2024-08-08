@@ -1,19 +1,28 @@
-<!-- myapp/templates/myapp/contact.html -->
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Add category{% endblock %} 
+{% block content %}
 
-</head>
-<body>
-    <!-- form start -->
-    <form method="post">
-        {% csrf_token %}
-        {{ creation_form.as_p }}
- 
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+        <div class="page-path">
+            <a href="{% url 'production_dashboard' %}">Production</a>
+            >
+            <a href="{% url 'categories_management_view' %}">Categories</a>
+            >
+            <a href="{% url 'add_category' %}">Add category</a>
+            
+        </div>
+      <div class="dashboard-inner-block">
+        <h2>Add category</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ creation_form.as_p }}
 
-        <button type="submit">Submit</button>
-    </form>
-
-    <!-- form ends -->
-</body>
-</html>
+          <button type="submit" class="btn btn-success">Add</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

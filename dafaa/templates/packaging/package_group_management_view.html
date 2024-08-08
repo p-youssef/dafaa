@@ -1,0 +1,34 @@
+
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Categories{% endblock %} 
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'packaging_dashboard' %}">Packaging</a>
+        >
+        <a href="{% url 'package_group_management_view' %}">Packaging Groups</a>
+      </div>
+      <div class="dashboard-inner-block">
+        <h1>Packaging Groups</h1>
+        <hr />
+        <a href="{% url 'add_packaging_group' %}" class="btn btn-success">+</a>
+        <br /><br />
+        <div class="list-group">
+          {% for group in groups %}
+          <a
+            class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            href="{% url 'edit_packaging_group' group.id %}">
+            {{ group }}
+          </a>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

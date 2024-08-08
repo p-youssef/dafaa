@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Add Package{% endblock %} 
+{% block content %}
 
-</head>
-<body>
-    <!-- form start -->
-    <form method="post">
-        {% csrf_token %}
-        {{ edit_form.as_p }}
- 
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'packaging_dashboard' %}">Packaging</a>
+        >
+        <a href="{% url 'package_group_management_view' %}">Packages (Syria to Italy)</a>
+        >
+        <a href="{% url 'edit_package_s2i' package.pk  %}">{{ package }}</a>
+      </div>
 
-        <button type="submit" name="submit_type" value="save">Submit</button>
-        <button type="submit" name="submit_type" value="set_as_send">set as send</button>
+      <div class="dashboard-inner-block">
+        <h2>{{ package }}</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ edit_form.as_p }}
 
-    </form>
-
-    <!-- form ends -->
-</body>
-</html>
+          <button class="btn btn-primary" type="submit" name="submit_type" value="save">save</button>
+          <hr>
+          {% if not package.send %}
+            
+            <button class="btn btn-success" type="submit" name="submit_type" value="set_as_send">
+                set as send
+            </button>
+          {% else %}
+            <p>send by {{ package.send_by }}</p>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

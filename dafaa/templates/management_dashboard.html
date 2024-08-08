@@ -1,0 +1,96 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Management Dashboard{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 dashboard-outline-block">
+                <div class="dashboard-inner-block">
+                    <h5>Production</h5>
+                    <hr>
+                    <h1 style="text-align: center;"> {{ available_items.count }} </h1>
+                    <h5 style="text-align: center;">Available products</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-4">
+                            <h2 style="text-align: center;"> {{ producing.count }}</h2>
+                            <h6 style="text-align: center;">Currently </h6>
+                            
+                        </div>
+                        
+                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.342); height: 100px; margin: 0 10px;"></div>
+
+                        <div class="col-3">
+                            <h3 style="text-align: center;"> {{ preduced_items.count }} </h3>
+                            <h6 style="text-align: center;">Produced</h6>
+                            
+                        </div>
+
+                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.342); height: 100px; margin: 0 10px;"></div>
+
+                        <div class="col-4">
+                            <h3 style="text-align: center;"> {{ sold_items.count }} </h3>
+                            <h6 style="text-align: center;">Sold</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 dashboard-outline-block">
+                <div class="dashboard-inner-block">
+                    <h5>Packaging</h5>
+                    <hr>
+                    <h1 style="text-align: center;"> {{ packages.count }} </h1>
+                    <h5 style="text-align: center;">Packages</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <h2 style="text-align: center;"> {{ unsend_packages.count }}</h2>
+                            <h6 style="text-align: center;">Preparing </h6>
+                            
+                        </div>
+                        
+                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.342); height: 100px; margin: 0 10px;"></div>
+
+                        <div class="col-5">
+                            <h3 style="text-align: center;"> {{ send_packages.count }} </h3>
+                            <h6 style="text-align: center;">Send</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6 dashboard-outline-block">
+                <div class="dashboard-inner-block">
+                    <h5>Finance</h5>
+                    <hr>
+                    <h1 style="text-align: center;"> {{ revenue }} €</h1>
+                    <h5 style="text-align: center;">{{ this_year }} Revenue</h5>
+                    <hr>
+                    <div class="row">
+                        <div class="col-6">
+                            <h2 style="text-align: center;"> {{ profit }} €</h2>
+                            <h6 style="text-align: center;">Profit</h6>
+                            
+                        </div>
+                        
+                        <div style="border-left: 2px solid rgba(0, 0, 0, 0.342); height: 100px; margin: 0 10px;"></div>
+
+                        <div class="col-5">
+                            <h3 style="text-align: center;"> {{ spending }} €</h3>
+                            <h6 style="text-align: center;">Spending</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+        </div>
+    </div>
+
+{% endblock %}

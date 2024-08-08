@@ -1,14 +1,26 @@
-<!-- myapp/templates/myapp/contact.html -->
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %} {% block title %}Management Dashboard | Add
+Package{% endblock %} {% block content %}
 
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ edit_form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'packaging_dashboard' %}">Packaging</a>
+        >
+        <a href="{% url 'package_group_management_view' %}">Packaging Groups</a>
+        >
+        <a href="{% url 'edit_packaging_group' group.pk  %}">{{ group }}</a>
+      </div>
+
+      <div class="dashboard-inner-block">
+        <h2>{{ group }}</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ edit_form.as_p }}
+          <button class="btn btn-primary" type="submit">save</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

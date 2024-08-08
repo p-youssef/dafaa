@@ -1,6 +1,27 @@
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Users {% endblock %} 
+{% block content %}
 
-{% for user in users %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'production_dashboard' %}">Users</a>
+      </div>
+      <div class="dashboard-inner-block">
+        <h2>Users</h2>
+        <hr />
+        <div class="list-group">
+            {% for user in users %}
 
-    <a href="{% url 'user_view' user.pk %}">{{ user }}</a><br>
+                <a  class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'user_view' user.pk %}">{{ user }}</a>
 
-{% endfor %}
+            {% endfor %}    
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

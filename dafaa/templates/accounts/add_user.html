@@ -1,15 +1,29 @@
+{% extends "admin_base.html" %}
+{% block title %}Management Dashboard | Add user
+{% endblock %} {% block content %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
-<body>
-    <h2>Register</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">edit</button>
-    </form>
-</body>
-</html>
+<div class="container">
+    <div class="row">
+        <div class="col-12 dashboard-outline-block">
+            <div class="page-path">
+                <a href="{% url 'users_view' %}">Users</a>
+                >
+                <a href="{% url 'add_user' %}">Add</a>
+
+            </div>
+            <div class="dashboard-inner-block">
+                <h2>{{ user }}</h2>
+                <hr />
+                <form class="django-form" method="post"
+                    enctype="multipart/form-data">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

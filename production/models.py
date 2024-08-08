@@ -20,8 +20,9 @@ import datetime, os
 
 """
 class Product_Category(models.Model):
-    name = models.CharField(max_length=100)
+    name        = models.CharField(max_length=100)
     description = models.TextField()
+    cover_image = models.ImageField(upload_to='product_category/', default='products/default.jpeg')
 
     def __str__(self) -> str:
         return self.name
@@ -61,12 +62,8 @@ class Product(models.Model):
     name                = models.CharField(max_length=100)
     category            = models.ForeignKey(Product_Category, related_name='category', on_delete=models.CASCADE, blank=True, null=True)
     description         = models.TextField()
+    cover_image         = models.ImageField(upload_to='products/', default='products/default.jpeg')
 
-
-    default_weight      = models.DecimalField(max_digits=10, decimal_places=2)
-    default_width       = models.DecimalField(max_digits=10, decimal_places=2)
-    default_height      = models.DecimalField(max_digits=10, decimal_places=2)
-    default_length      = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self) -> str:
         return self.name
@@ -99,9 +96,10 @@ class Product(models.Model):
     -------
 
 """
+
 class Product_Item(models.Model):
     name                = models.CharField(max_length=100)
-    product             = models.ForeignKey(Product, related_name='product', on_delete=models.CASCADE, blank=True, null=True)
+    product             = models.ForeignKey(Product, related_name='item', on_delete=models.CASCADE, blank=True, null=True)
     Weight              = models.DecimalField(max_digits=10, decimal_places=2)
     width               = models.DecimalField(max_digits=10, decimal_places=2)
     height              = models.DecimalField(max_digits=10, decimal_places=2)
@@ -140,7 +138,8 @@ class Product_Item(models.Model):
 
         item_image.delete()
         
-
+    def get_profit_value(self):
+        return self.first_offer_price - self.raw_material_value - ((self.Weight * self.package_S2I.cost) / self.package_S2I.weight) - self.packaging_group.price
 
 
 

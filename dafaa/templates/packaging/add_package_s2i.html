@@ -1,18 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | Add Package{% endblock %} 
+{% block content %}
 
-</head>
-<body>
-    <!-- form start -->
-    <form method="post">
-        {% csrf_token %}
-        {{ creation_form.as_p }}
- 
+<div class="container">
+  <div class="row">
+    <div class="col-12 dashboard-outline-block">
+      <div class="page-path">
+        <a href="{% url 'packaging_dashboard' %}">Packaging</a>
+        >
+        <a href="{% url 'packages_s2i_management_view' %}">Packages (Syria to Italy)</a>
+        >
+        <a href="{% url 'add_package_s2i' %}">Add Package</a>
+      </div>
 
-        <button type="submit">Submit</button>
-    </form>
+      <div class="dashboard-inner-block">
+        <h2>Add Package</h2>
+        <hr />
+        <form class="django-form" method="post" enctype="multipart/form-data">
+          {% csrf_token %} {{ creation_form.as_p }}
 
-    <!-- form ends -->
-</body>
-</html>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

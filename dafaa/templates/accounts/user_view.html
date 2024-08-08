@@ -1,18 +1,37 @@
+{% extends "admin_base.html" %} 
+{% block title %}Management Dashboard | {{ p_user }} 
+{% endblock %} {% block content %}
 
-<br>
-<form method="post">
-    {{ details_form.errors }}
-    {% csrf_token %}
-    {{ details_form.as_p }}
-    <input type="hidden" name="type" value="details">
-    <button type="submit">Edit</button>
-</form>
-<hr>
-<form method="post">
-    {% csrf_token %}
-    
-    {{ password_form.as_p }}
+<div class="container">
+    <div class="row">
+        <div class="col-12 dashboard-outline-block">
+            <div class="page-path">
+                <a href="{% url 'users_view' %}">Users</a>
+                >
+                <a href="{% url 'user_view' p_user.pk %}">{{p_user}}</a>
+            </div>
+            <div class="dashboard-inner-block">
+                <h2>{{ p_user }}</h2>
+                <hr />
+                <form class="django-form" method="post"
+                    enctype="multipart/form-data">
+                    {{ details_form.errors }} {% csrf_token %} {{ details_form.as_p }}
+                    <input type="hidden" name="type" value="details" />
+                    <button class="btn btn-primary" type="submit">Edit</button>
+                </form>
+                <hr/>
+                <form class="django-form" method="post"
+                    enctype="multipart/form-data">
+                    <h4>Change Password</h4>
+                    <input type="hidden" name="username" value="{{ details_form.username }}">
+                    {% csrf_token %} {{ password_form.as_p }}
 
-    <input type="hidden" name="type" value="password">
-    <button type="submit">change password</button>
-</form>
+                    <input type="hidden" name="type" value="password" />
+                    <button class="btn btn-primary" type="submit">change password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

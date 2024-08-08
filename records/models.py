@@ -19,3 +19,6 @@ class Selling_Record(models.Model):
     item            = models.ForeignKey(Product_Item, related_name='item', on_delete=models.CASCADE, blank=True, null=True)
     selling_date    = models.DateField()
     price           = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self) -> str:
+        return str(self.price)

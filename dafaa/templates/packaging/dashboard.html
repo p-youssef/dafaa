@@ -1,0 +1,34 @@
+{% extends "admin_base.html" %}
+
+{% block title %}Management Dashboard | Packaging Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="page-path">
+            <a href="{% url 'packaging_dashboard' %}">Packaging</a>    
+        </div>
+        <div class="col-lg-4 dashboard-outline-block" >
+            <div class="dashboard-inner-block" style="cursor: pointer;" onclick="window.location.href = '{% url 'packages_s2i_management_view' %}'">
+                <h5>Syria to Italy Packages</h5>
+                <hr>
+                <h1 style="text-align: center;"> {{ package_s2i.count }} <sub>Package</sub></h1>
+            </div>
+        </div>
+
+        <div class="col-lg-4 dashboard-outline-block" >
+            <div class="dashboard-inner-block" style="cursor: pointer;" onclick="window.location.href = '{% url 'package_group_management_view' %}'">
+                <h5>Package Group</h5>
+                <hr>
+                <h1 style="text-align: center;"> {{ package_group.count }} <sub>Group</sub></h1>
+            </div>
+        </div>
+        
+
+    </div>
+</div>
+
+
+
+{% endblock %}

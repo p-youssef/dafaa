@@ -1,16 +1,45 @@
-<!-- myapp/templates/myapp/contact.html -->
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "admin_base.html" %}
 
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ edit_form.as_p }}
-        <button type="submit">Save</button>
-        <a href="{% url 'add_item' edit_form.product_id %}">add item</a>
+{% block title %}Management Dashboard | {{ product }} {% endblock %}
 
-    </form>
-</body>
-</html>
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 dashboard-outline-block" >
+            <div class="page-path">
+                <a href="{% url 'production_dashboard' %}">Production</a>
+                >
+                <a href="{% url 'products_management_view' %}">Products</a>
+                >
+                <a href="{% url 'edit_product' product.pk %}">{{ product }}</a>
+            </div>
+            <div class="dashboard-inner-block">
+                <h2>Product Type <sub class="id_label">#{{ product.pk }}</sub></h2>
+                <hr>
+                <form class="django-form " method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ edit_form.as_p }}
+                    <button type="submit" class="btn btn-success" value="save">Save</button>
+                    <hr>
+                    <h3>Items</h3>
+                    <a href="{% url 'add_item' edit_form.product_id %}" class="btn btn-success">add item</a>
+                    
+                    <div class="list-group " style="padding-top: 20px;">
+                        {% for item in product.item.all %}
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="{% url 'edit_item' item.id %}">
+                                {{ item }} 
+                                <span class="badge badge-primary badge-pill">{{ item.first_offer_price }} € </span>
+    
+                            </a>
+                        
+                        {% endfor %}
+                    </div> 
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
